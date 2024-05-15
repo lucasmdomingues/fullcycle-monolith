@@ -45,7 +45,7 @@ describe('Product repository test', () => {
             purchasePrice: product.PurchasePrice,
             stock: product.Stock,
             createdAt: product.CreatedAt,
-            updatedAt: product.UpdateAt
+            updatedAt: product.UpdatedAt
         })
     })
 
