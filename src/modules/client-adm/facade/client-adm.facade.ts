@@ -20,6 +20,6 @@ export default class ClientAdmFacade implements ClientAdmFacadeInterface {
     }
 
     async find(input: FindClientFacadeInputDTO): Promise<FindClientFacadeOutputDTO> {
-        throw new Error("Method not implemented.");
+        return await this.findUsecase.execute(input)
     }
 }
