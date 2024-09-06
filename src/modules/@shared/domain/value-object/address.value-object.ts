@@ -39,7 +39,7 @@ export default class Address implements ValueObject {
     }
 
     get City(): string {
-        return this.City
+        return this.city
     }
 
     get State(): string {
