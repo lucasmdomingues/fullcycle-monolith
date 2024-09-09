@@ -3,7 +3,7 @@ import { PaymentStatusApproved } from "../domain/transaction";
 import PaymentFacadeFactory from "../factory/payment.facade.factory";
 import TransactionModel from "../repository/transaction.model";
 
-describe('Transaction repository test', () => {
+describe('Transaction facade test', () => {
     let sequelize: Sequelize;
 
     beforeEach(async () => {

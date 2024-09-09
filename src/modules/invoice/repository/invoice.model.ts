@@ -23,7 +23,7 @@ export default class InvoiceModel extends Model {
     declare street: string;
 
     @Column({ allowNull: false })
-    declare number: number;
+    declare number: string;
 
     @Column({ allowNull: false })
     declare complement: string;
