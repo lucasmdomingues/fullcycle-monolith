@@ -8,18 +8,18 @@ import InvoiceModel from "./invoice.model";
 export default class InvoiceItemModel extends Model {
     @PrimaryKey
     @Column({ allowNull: false })
-    id: string;
+    declare id: string;
 
     @ForeignKey(() => InvoiceModel)
     @Column({ allowNull: false, field: "invoice_id" })
-    invoiceID: string;
+    declare invoiceID: string;
 
     @BelongsTo(() => InvoiceModel)
-    invoice: InvoiceModel;
+    declare invoice: InvoiceModel;
 
     @Column({ allowNull: false })
-    name: string;
+    declare name: string;
 
     @Column({ allowNull: false })
-    price: number;
+    declare price: number;
 }

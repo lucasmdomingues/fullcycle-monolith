@@ -3,7 +3,7 @@ import ProductModel from "../repository/product.model";
 import StoreCatalogFacadeFactory from "../factory/facade.factory";
 import ID from "../../@shared/domain/value-object/id.value-object";
 
-describe("Product repository test", () => {
+describe("Product facade test", () => {
     let sequelize: Sequelize;
 
     beforeEach(async () => {

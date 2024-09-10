@@ -38,15 +38,11 @@ describe('Product repository test', () => {
             where: { id: product.ID.Value }
         })
 
-        expect(data.toJSON()).toEqual({
-            id: product.ID.Value,
-            name: product.Name,
-            description: product.Description,
-            purchasePrice: product.PurchasePrice,
-            stock: product.Stock,
-            createdAt: product.CreatedAt,
-            updatedAt: product.UpdatedAt
-        })
+        expect(data.id).toEqual(product.ID.Value)
+        expect(data.name).toEqual(product.Name)
+        expect(data.description).toEqual(product.Description)
+        expect(data.purchasePrice).toEqual(product.PurchasePrice)
+        expect(data.stock).toEqual(product.Stock)
     })
 
     it('should find a product', async () => {

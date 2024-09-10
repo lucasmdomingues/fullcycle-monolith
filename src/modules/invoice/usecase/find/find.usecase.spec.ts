@@ -4,12 +4,6 @@ import InvoiceItem from "../../domain/invoice-item.entity"
 import Invoice from "../../domain/invoice.entity"
 import FindInvoiceUsecase from "./find.usecase"
 
-const repositoryMock = () => {
-    return {
-        find: jest.fn().mockReturnValue(Promise.resolve(invoiceMocked))
-    }
-}
-
 const invoiceMocked = new Invoice({
     id: new ID('1'),
     name: "foo",
@@ -36,6 +30,13 @@ const invoiceMocked = new Invoice({
     ],
 })
 
+const repositoryMock = () => {
+    return {
+        find: jest.fn().mockReturnValue(Promise.resolve(invoiceMocked)),
+        generate: jest.fn()
+    }
+}
+
 describe("Find invoice usecase unit test", () => {
     it("should find a invoice", async () => {
         const repository = repositoryMock()
@@ -53,5 +54,6 @@ describe("Find invoice usecase unit test", () => {
         expect(output.address).toBeDefined()
         expect(output.items).toHaveLength(2)
         expect(output.total).toBe(invoiceMocked.calculateTotal()) // Should be 20
+        expect(output.createdAt).toBeDefined()
     })
 })
