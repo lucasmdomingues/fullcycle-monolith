@@ -27,7 +27,13 @@ describe('Product repository test', () => {
             id: "1",
             name: "Client 1",
             email: "x@x.com",
-            address: "Address 1",
+            document: "123",
+            street: "test",
+            number: "123",
+            complement: "foo",
+            city: "bar",
+            state: "test",
+            zipCode: "123",
             createdAt: new Date(),
             updatedAt: new Date()
         })
@@ -38,7 +44,6 @@ describe('Product repository test', () => {
         expect(output.ID.Value).toBe(client.id)
         expect(output.Name).toBe(client.name)
         expect(output.Email).toBe(client.email)
-        expect(output.Address).toBe(client.address)
     })
 
     it('should create a client', async () => {
@@ -46,7 +51,13 @@ describe('Product repository test', () => {
             id: new ID("1"),
             name: "Client 1",
             email: "x@x.com",
-            address: "Address 1",
+            document: "123",
+            street: "test",
+            number: "123",
+            complement: "foo",
+            city: "bar",
+            state: "test",
+            zipCode: "123",
             createdAt: new Date(),
             updatedAt: new Date()
         })
@@ -59,7 +70,6 @@ describe('Product repository test', () => {
         expect(clientModel.id).toEqual(client.ID.Value)
         expect(clientModel.name).toEqual(client.Name)
         expect(clientModel.email).toEqual(client.Email)
-        expect(clientModel.address).toEqual(client.Address)
         expect(clientModel.createdAt).toEqual(client.CreatedAt)
         expect(clientModel.updatedAt).toEqual(client.UpdatedAt)
     })

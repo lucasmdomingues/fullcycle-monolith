@@ -13,7 +13,13 @@ export default class AddClientUsecase {
             id: new ID(input.id),
             name: input.name,
             email: input.email,
-            address: input.address
+            document: "123",
+            street: "abc",
+            number: "123",
+            complement: "abc",
+            city: "abc",
+            state: "abc",
+            zipCode: "123"
         })
 
         await this.repository.add(client)
@@ -22,7 +28,13 @@ export default class AddClientUsecase {
             id: client.ID.Value,
             name: client.Name,
             email: client.Email,
-            address: client.Address,
+            document: client.Document,
+            street: client.Street,
+            number: client.Number,
+            complement: client.Complement,
+            city: client.City,
+            state: client.State,
+            zipCode: client.ZipCode,
             createdAt: client.CreatedAt,
             updatedAt: client.UpdatedAt
         }

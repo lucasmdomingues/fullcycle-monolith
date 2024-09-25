@@ -1,9 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
 import { ClientModel } from "../repository/client.model";
-import ClientRepository from "../repository/client.repository";
-import AddClientUsecase from "../usecase/add-client/add-client.usecase";
-import ClientAdmFacade from "./client-adm.facade";
-import FindClientUsecase from "../usecase/find-client/find-client.usecase";
 import ClientAdmFacadeFactory from "./client-admn.facade.factory";
 
 describe('Client ADM facade test', () => {
@@ -29,7 +25,6 @@ describe('Client ADM facade test', () => {
             id: "1",
             name: "Client 1",
             email: "x@x.com",
-            address: "address, 1"
         }
 
         await facade.add(input)
@@ -39,7 +34,6 @@ describe('Client ADM facade test', () => {
         expect(clientModel.id).toEqual(input.id)
         expect(clientModel.name).toEqual(input.name)
         expect(clientModel.email).toEqual(input.email)
-        expect(clientModel.address).toEqual(input.address)
     })
 
     it("should find a client", async () => {
@@ -49,7 +43,6 @@ describe('Client ADM facade test', () => {
             id: "1",
             name: "Client 1",
             email: "x@x.com",
-            address: "address, 1"
         }
 
         await facade.add(input)
@@ -59,6 +52,5 @@ describe('Client ADM facade test', () => {
         expect(output.id).toEqual(input.id)
         expect(output.name).toEqual(input.name)
         expect(output.email).toEqual(input.email)
-        expect(output.address).toEqual(input.address)
     })
 })

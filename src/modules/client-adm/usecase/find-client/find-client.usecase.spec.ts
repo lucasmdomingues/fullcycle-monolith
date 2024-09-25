@@ -13,7 +13,13 @@ const clientMock = new Client({
     id: new ID("1"),
     name: "Client 1",
     email: "x@x.com",
-    address: "Address, 1"
+    document: "123",
+    street: "abc",
+    number: "123",
+    complement: "abc",
+    city: "abc",
+    state: "abc",
+    zipCode: "123"
 })
 
 describe("Find client usecase unit test", () => {
@@ -32,6 +38,5 @@ describe("Find client usecase unit test", () => {
         expect(output.id).toBe(clientMock.ID.Value)
         expect(output.name).toBe(clientMock.Name)
         expect(output.email).toBe(clientMock.Email)
-        expect(output.address).toBe(clientMock.Address)
     })
 })

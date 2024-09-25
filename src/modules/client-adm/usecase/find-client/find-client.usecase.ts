@@ -12,7 +12,13 @@ export default class FindClientUsecase {
             id: client.ID.Value,
             name: client.Name,
             email: client.Email,
-            address: client.Address,
+            document: client.Document,
+            street: client.Street,
+            complement: client.Complement,
+            number: client.Number,
+            city: client.City,
+            state: client.State,
+            zipCode: client.ZipCode,
             createdAt: client.CreatedAt,
             updatedAt: client.UpdatedAt
         }
