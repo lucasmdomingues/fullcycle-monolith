@@ -35,7 +35,6 @@ export default class Order extends BaseEntity {
     get Status(): string {
         return this.status
     }
-
     get Total(): number {
         return this.products.reduce((total, product) => total + product.SalesPrice, 0)
     }

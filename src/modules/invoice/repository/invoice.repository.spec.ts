@@ -40,7 +40,7 @@ describe('Invoice repository test', () => {
         sequelize = new Sequelize({
             dialect: 'sqlite',
             storage: ':memory:',
-            logging: false,
+            logging: true,
             sync: {
                 force: true,
             }

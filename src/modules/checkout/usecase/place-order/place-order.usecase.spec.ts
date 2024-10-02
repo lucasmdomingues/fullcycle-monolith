@@ -71,10 +71,8 @@ describe("Place order usecase unit test", () => {
 
             const invoiceFacadeMock = {
                 find: jest.fn(),
-                generate: jest.fn()
+                generate: jest.fn().mockReturnValue({id: "1i"})
             }
-
-
 
             const usecase = new PlaceOrderUsecase(
                 checkouRepositoryMock,
@@ -104,8 +102,8 @@ describe("Place order usecase unit test", () => {
                 ],
             ])
 
-            const validateProductsSpy = jest.spyOn(usecase, "validateProducts")
-            const getProductSpy = jest.spyOn(usecase, "getProduct")
+            const validateProductsSpy = jest.spyOn(usecase, "validateProducts").mockResolvedValue(null)
+            const getProductSpy = jest.spyOn(usecase, "getProduct").mockImplementation((productID: string) => Promise.resolve(products.get(productID)))
 
             it("should not be approved", async () => {
                 paymentFacadeMock.process = paymentFacadeMock.process.mockReturnValue({
