@@ -1,6 +1,9 @@
-import { ForeignKeyConstraintError } from "sequelize";
+import ID from "../../@shared/domain/value-object/id.value-object";
+import Client from "../domain/client.entity";
 import Order from "../domain/order.entity";
+import Product from "../domain/product.entity";
 import CheckoutGateway from "../gateway/checkout.gateway";
+import ClientModel from "./client.model";
 import OrderModel from "./order.model";
 import ProductModel from "./product.model";
 
@@ -21,10 +24,33 @@ export default class CheckoutRepository implements CheckoutGateway {
             })
         } catch (error) {
             throw new Error(`failed to add order: ${error}`);
-            
         }
     }
     async findOrder(id: string): Promise<Order | null> {
-        throw new Error("Method not implemented.");
+        const orderModel = await OrderModel.findOne({ where: { id }, include: [{ model: ClientModel }, { model: ProductModel }] })
+        if (!orderModel) return null
+
+        return new Order({
+            id: new ID(orderModel.id),
+            client: new Client({
+                id: new ID(orderModel.clientID),
+                name: orderModel.client.name,
+                email: orderModel.client.email,
+                document: orderModel.client.document,
+                street: orderModel.client.street,
+                number: orderModel.client.number,
+                complement: orderModel.client.complement,
+                city: orderModel.client.city,
+                state: orderModel.client.state,
+                zipCode: orderModel.client.zipCode,
+            }),
+            produts: orderModel.products.map((product) => new Product({
+                id: new ID(product.id),
+                name: product.name,
+                description: product.description,
+                salesPrice: product.salesPrice
+            })),
+            status: orderModel.status
+        })
     }
 }
