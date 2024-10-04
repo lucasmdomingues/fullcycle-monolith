@@ -13,13 +13,13 @@ export default class AddClientUsecase {
             id: new ID(input.id),
             name: input.name,
             email: input.email,
-            document: "123",
-            street: "abc",
-            number: "123",
-            complement: "abc",
-            city: "abc",
-            state: "abc",
-            zipCode: "123"
+            document: input.document,
+            street: input.street,
+            number: input.number,
+            complement: input.complement,
+            city: input.city,
+            state: input.state,
+            zipCode: input.zipCode
         })
 
         await this.repository.add(client)
