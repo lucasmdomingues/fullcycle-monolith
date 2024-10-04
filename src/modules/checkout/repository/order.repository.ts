@@ -3,9 +3,9 @@ import Client from "../domain/client.entity";
 import Order from "../domain/order.entity";
 import Product from "../domain/product.entity";
 import CheckoutGateway from "../gateway/checkout.gateway";
-import ClientModel from "./client.model";
+import ClientModel from "./order-client.model";
 import OrderModel from "./order.model";
-import ProductModel from "./product.model";
+import ProductModel from "./order-product.model";
 
 export default class CheckoutRepository implements CheckoutGateway {
     async addOrder(order: Order): Promise<void> {

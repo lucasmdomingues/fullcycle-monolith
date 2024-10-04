@@ -1,11 +1,11 @@
 import { Sequelize } from "sequelize-typescript"
-import OrderModel from "./order.model"
-import ClientModel from "./client.model"
-import ProductModel from "./product.model"
-import Client from "../domain/client.entity"
 import ID from "../../@shared/domain/value-object/id.value-object"
-import Product from "../domain/product.entity"
+import Client from "../domain/client.entity"
 import Order from "../domain/order.entity"
+import Product from "../domain/product.entity"
+import OrderClientModel from "./order-client.model"
+import OrderProductModel from "./order-product.model"
+import OrderModel from "./order.model"
 import CheckoutRepository from "./order.repository"
 
 describe('Order repository test', () => {
@@ -18,7 +18,7 @@ describe('Order repository test', () => {
             logging: false,
             sync: { force: true },
         })
-        sequelize.addModels([OrderModel, ProductModel, ClientModel])
+        sequelize.addModels([OrderModel, OrderProductModel, OrderClientModel])
         await sequelize.sync()
     })
 
@@ -40,7 +40,7 @@ describe('Order repository test', () => {
             zipCode: "123",
         })
 
-        await ClientModel.create({
+        await OrderClientModel.create({
             id: client.ID.Value,
             name: client.Name,
             email: client.Email,
@@ -81,11 +81,11 @@ describe('Order repository test', () => {
         const orderModel = await OrderModel.findOne({
             where: { id: order.ID.Value },
             include: [
-                { model: ClientModel },
-                { model: ProductModel }
+                { model: OrderClientModel },
+                { model: OrderProductModel }
             ]
         })
-        
+
         expect(orderModel.id).toStrictEqual(order.ID.Value)
         expect(orderModel.status).toBe(order.Status)
 
@@ -122,7 +122,7 @@ describe('Order repository test', () => {
             zipCode: "123",
         })
 
-        await ClientModel.create({
+        await OrderClientModel.create({
             id: client.ID.Value,
             name: client.Name,
             email: client.Email,
