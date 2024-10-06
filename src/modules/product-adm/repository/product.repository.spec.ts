@@ -54,17 +54,9 @@ describe('Product repository test', () => {
             stock: 100
         })
 
-        await ProductModel.create({
-            id: product.ID.Value,
-            name: product.Name,
-            description: product.Description,
-            purchasePrice: product.PurchasePrice,
-            stock: product.Stock,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        })
-
         const repository = new ProductRepository()
+        await repository.add(product)
+
         const data = await repository.find(product.ID.Value)
 
         expect(data.ID.Value).toEqual(product.ID.Value)
@@ -72,5 +64,69 @@ describe('Product repository test', () => {
         expect(data.Description).toEqual(product.Description)
         expect(data.PurchasePrice).toEqual(product.PurchasePrice)
         expect(data.Stock).toEqual(product.Stock)
+        expect(data.CreatedAt).toBeDefined()
+        expect(data.UpdatedAt).toBeDefined()
+    })
+
+    it("should find all products", async () => {
+        const productsMock = [
+            {
+                id: new ID("1").Value,
+                name: "Product 1",
+                description: "Desc 1",
+                purchasePrice: 100,
+                stock: 100,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                id: new ID("2").Value,
+                name: "Product 2",
+                description: "Desc 2",
+                purchasePrice: 200,
+                stock: 100,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }
+        ]
+
+        await ProductModel.bulkCreate(productsMock)
+
+        const repository = new ProductRepository()
+        const products = await repository.findAll()
+
+        expect(products).toHaveLength(2)
+
+        products.forEach((product, i) => {
+            expect(product.ID.Value).toBe(productsMock[i].id)
+            expect(product.Name).toBe(productsMock[i].name)
+            expect(product.Description).toBe(productsMock[i].description)
+            expect(product.PurchasePrice).toBe(productsMock[i].purchasePrice)
+        });
+    })
+
+    it("should find a product", async () => {
+        const productMock = {
+            id: new ID("1").Value,
+            name: "Product 1",
+            description: "Desc 1",
+            purchasePrice: 100,
+            stock: 10,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+
+        await ProductModel.create(productMock)
+
+        const repository = new ProductRepository()
+        const product = await repository.find(productMock.id)
+
+        expect(product.ID.Value).toBe(productMock.id)
+        expect(product.Name).toBe(productMock.name)
+        expect(product.Description).toBe(productMock.description)
+        expect(product.PurchasePrice).toBe(productMock.purchasePrice)
+        expect(product.Stock).toBe(productMock.stock)
+        expect(product.CreatedAt).toBeDefined()
+        expect(product.UpdatedAt).toBeDefined()
     })
 })

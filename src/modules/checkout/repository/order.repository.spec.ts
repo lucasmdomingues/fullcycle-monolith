@@ -58,13 +58,13 @@ describe('Order repository test', () => {
                 id: new ID("1p"),
                 name: "Product 1",
                 description: "Product 1 description",
-                salesPrice: 100,
+                purchasePrice: 100,
             }),
             new Product({
                 id: new ID("2p"),
                 name: "Product 2",
                 description: "Product 2 description",
-                salesPrice: 200,
+                purchasePrice: 200,
             }),
         ]
 
@@ -104,7 +104,7 @@ describe('Order repository test', () => {
             expect(product.id).toBe(order.Products[i].ID.Value)
             expect(product.name).toBe(order.Products[i].Name)
             expect(product.description).toBe(order.Products[i].Description)
-            expect(product.salesPrice).toBe(order.Products[i].SalesPrice)
+            expect(product.purchasePrice).toBe(order.Products[i].PurchasePrice)
         })
     })
 
@@ -140,13 +140,13 @@ describe('Order repository test', () => {
                 id: new ID("1p"),
                 name: "Product 1",
                 description: "Product 1 description",
-                salesPrice: 100,
+                purchasePrice: 100,
             }),
             new Product({
                 id: new ID("2p"),
                 name: "Product 2",
                 description: "Product 2 description",
-                salesPrice: 200,
+                purchasePrice: 200,
             }),
         ]
 
@@ -179,7 +179,7 @@ describe('Order repository test', () => {
             expect(product.ID).toStrictEqual(order.Products[i].ID)
             expect(product.Name).toStrictEqual(order.Products[i].Name)
             expect(product.Description).toStrictEqual(order.Products[i].Description)
-            expect(product.SalesPrice).toStrictEqual(order.Products[i].SalesPrice)
+            expect(product.PurchasePrice).toStrictEqual(order.Products[i].PurchasePrice)
         })
     })
 })

@@ -4,7 +4,6 @@ import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.faca
 import InvoiceFacadeInterface from "../../../invoice/facade/invoice.facade.interface";
 import PaymentFacadeInterface from "../../../payment/facade/payment.facade.interface";
 import ProductAdmFacadeInterface from "../../../product-adm/facade/product-adm.facade.interface";
-import StoreCatalogFacadeInterface from "../../../store-catalog/facade/store-catalog.facade.interface";
 import Client from "../../domain/client.entity";
 import Order from "../../domain/order.entity";
 import Product from "../../domain/product.entity";
@@ -17,7 +16,6 @@ export default class PlaceOrderUsecase implements UsecaseInterface {
         private repository: CheckoutGateway,
         private clientFacade: ClientAdmFacadeInterface,
         private productFacade: ProductAdmFacadeInterface,
-        private catalogFacade: StoreCatalogFacadeInterface,
         private invoiceFacade: InvoiceFacadeInterface,
         private paymentFacade: PaymentFacadeInterface,
     ) { }
@@ -68,7 +66,7 @@ export default class PlaceOrderUsecase implements UsecaseInterface {
                 items: order.Products.map((product) => ({
                     id: product.ID.Value,
                     name: product.Name,
-                    price: product.SalesPrice
+                    price: product.PurchasePrice
                 }))
             })
             order.approved()
@@ -98,14 +96,14 @@ export default class PlaceOrderUsecase implements UsecaseInterface {
     }
 
     async getProduct(productID: string): Promise<Product> {
-        const product = await this.catalogFacade.find({ id: productID })
+        const product = await this.productFacade.find({ id: productID })
         if (!product) throw new Error("Product not found");
 
         return new Product({
             id: new ID(product.id),
             name: product.name,
             description: product.description,
-            salesPrice: product.salesPrice
+            purchasePrice: product.purchasePrice
         })
     }
 }

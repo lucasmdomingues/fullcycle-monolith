@@ -25,6 +25,15 @@ describe('Client ADM facade test', () => {
             id: "1",
             name: "Client 1",
             email: "x@x.com",
+            document: "test",
+            street: "test",
+            number: "test",
+            complement: "test",
+            city: "test",
+            state: "test",
+            zipCode: "123",
+            createdAt: new Date(),
+            updatedAt: new Date()
         }
 
         await facade.add(input)
@@ -43,6 +52,15 @@ describe('Client ADM facade test', () => {
             id: "1",
             name: "Client 1",
             email: "x@x.com",
+            document: "test",
+            street: "test",
+            number: "test",
+            complement: "test",
+            city: "test",
+            state: "test",
+            zipCode: "123",
+            createdAt: new Date(),
+            updatedAt: new Date()
         }
 
         await facade.add(input)

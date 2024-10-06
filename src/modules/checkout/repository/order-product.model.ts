@@ -23,6 +23,6 @@ export default class OrderProductModel extends Model {
     @Column({ allowNull: false })
     declare description: string;
 
-    @Column({ allowNull: false, field: "sales_price" })
-    declare salesPrice: number;
+    @Column({ allowNull: false, field: "purchase_price" })
+    declare purchasePrice: number;
 }

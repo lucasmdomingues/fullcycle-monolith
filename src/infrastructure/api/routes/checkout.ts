@@ -5,13 +5,11 @@ import ClientAdmFacadeInterface from "../../../modules/client-adm/facade/client-
 import InvoiceFacadeInterface from "../../../modules/invoice/facade/invoice.facade.interface"
 import PaymentFacadeInterface from "../../../modules/payment/facade/payment.facade.interface"
 import ProductAdmFacadeInterface from "../../../modules/product-adm/facade/product-adm.facade.interface"
-import StoreCatalogFacadeInterface from "../../../modules/store-catalog/facade/store-catalog.facade.interface"
 
 export function NewCheckoutRouter(
     repository: CheckoutGateway,
     clientFacade: ClientAdmFacadeInterface,
     productFacade: ProductAdmFacadeInterface,
-    catalogFacade: StoreCatalogFacadeInterface,
     invoiceFacade: InvoiceFacadeInterface,
     paymentFacade: PaymentFacadeInterface
 ): Router {
@@ -22,7 +20,6 @@ export function NewCheckoutRouter(
             repository,
             clientFacade,
             productFacade,
-            catalogFacade,
             invoiceFacade,
             paymentFacade
         )

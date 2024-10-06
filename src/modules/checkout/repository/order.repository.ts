@@ -18,7 +18,7 @@ export default class CheckoutRepository implements CheckoutGateway {
                     orderID: order.ID.Value,
                     name: product.Name,
                     description: product.Description,
-                    salesPrice: product.SalesPrice
+                    salesPrice: product.PurchasePrice
                 })),
                 status: order.Status,
             })
@@ -48,7 +48,7 @@ export default class CheckoutRepository implements CheckoutGateway {
                 id: new ID(product.id),
                 name: product.name,
                 description: product.description,
-                salesPrice: product.salesPrice
+                purchasePrice: product.purchasePrice
             })),
             status: orderModel.status
         })

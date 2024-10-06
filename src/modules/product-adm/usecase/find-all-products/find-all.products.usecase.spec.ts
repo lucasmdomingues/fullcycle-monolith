@@ -6,14 +6,16 @@ const p1 = new Product({
     id: new ID("1"),
     name: "",
     description: "",
-    salesPrice: 100
+    purchasePrice: 100,
+    stock: 1
 })
 
 const p2 = new Product({
     id: new ID("1"),
     name: "",
     description: "",
-    salesPrice: 100
+    purchasePrice: 100,
+    stock: 1
 })
 
 const productsMock = [p1, p2]
@@ -21,7 +23,8 @@ const productsMock = [p1, p2]
 const repositoryMock = () => {
     return {
         findAll: jest.fn().mockReturnValue(Promise.resolve(productsMock)),
-        find: jest.fn()
+        find: jest.fn(),
+        add: jest.fn(),
     }
 }
 
@@ -38,7 +41,8 @@ describe("Find all products usecase unit test", () => {
             expect(product.id).toBe(productsMock[i].ID.Value)
             expect(product.name).toBe(productsMock[i].Name)
             expect(product.description).toBe(productsMock[i].Description)
-            expect(product.salesPrice).toBe(productsMock[i].SalesPrice)
+            expect(product.purchasePrice).toBe(productsMock[i].PurchasePrice)
+            expect(product.stock).toBe(productsMock[i].Stock)
         })
     })
 })

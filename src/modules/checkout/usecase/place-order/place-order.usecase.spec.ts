@@ -3,7 +3,6 @@ import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.faca
 import InvoiceFacadeInterface from "../../../invoice/facade/invoice.facade.interface"
 import PaymentFacadeInterface from "../../../payment/facade/payment.facade.interface"
 import ProductAdmFacadeInterface, { CheckStockFacadeInputDto } from "../../../product-adm/facade/product-adm.facade.interface"
-import StoreCatalogFacadeInterface from "../../../store-catalog/facade/store-catalog.facade.interface"
 import Product from "../../domain/product.entity"
 import CheckoutGateway from "../../gateway/checkout.gateway"
 import { PlaceOrderInputDTO } from "./place-order.dto"
@@ -16,7 +15,6 @@ let invoiceFacadeDummy: InvoiceFacadeInterface;
 let paymentFacadeDummy: PaymentFacadeInterface;
 let clientFacadeDummy: ClientAdmFacadeInterface;
 let productFacadeDummy: ProductAdmFacadeInterface;
-let catalogFacadeDummy: StoreCatalogFacadeInterface;
 
 describe("Place order usecase unit test", () => {
     describe("execute method", () => {
@@ -34,7 +32,7 @@ describe("Place order usecase unit test", () => {
                 add: jest.fn()
             }
 
-            const usecase = new PlaceOrderUsecase(checkoutRepositoryDummy, clientFacadeMock, productFacadeDummy, catalogFacadeDummy,
+            const usecase = new PlaceOrderUsecase(checkoutRepositoryDummy, clientFacadeMock, productFacadeDummy,
                 invoiceFacadeDummy, paymentFacadeDummy)
             const input: PlaceOrderInputDTO = { clientID: "0", products: [] }
 
@@ -71,14 +69,13 @@ describe("Place order usecase unit test", () => {
 
             const invoiceFacadeMock = {
                 find: jest.fn(),
-                generate: jest.fn().mockReturnValue({id: "1i"})
+                generate: jest.fn().mockReturnValue({ id: "1i" })
             }
 
             const usecase = new PlaceOrderUsecase(
                 checkouRepositoryMock,
                 clientFacadeMock,
                 productFacadeDummy,
-                catalogFacadeDummy,
                 invoiceFacadeMock,
                 paymentFacadeMock,
             )
@@ -89,7 +86,7 @@ describe("Place order usecase unit test", () => {
                         id: new ID("1"),
                         name: "test",
                         description: "test",
-                        salesPrice: 40
+                        purchasePrice: 40
                     })
                 ],
                 [
@@ -97,7 +94,7 @@ describe("Place order usecase unit test", () => {
                         id: new ID("2"),
                         name: "test",
                         description: "test",
-                        salesPrice: 30
+                        purchasePrice: 30
                     })
                 ],
             ])
@@ -190,11 +187,13 @@ describe("Place order usecase unit test", () => {
             checkStock: jest.fn().mockImplementation((input: CheckStockFacadeInputDto) => Promise.resolve({
                 productId: input.productId,
                 stock: input.productId === "1" ? 0 : 1
-            }))
+            })),
+            find: jest.fn().mockResolvedValue(null),
+            findAll: jest.fn()
         }
 
         it("should throw an error when not products selected", async () => {
-            const usecase = new PlaceOrderUsecase(checkoutRepositoryDummy, clientFacadeMock, productFacadeDummy, catalogFacadeDummy,
+            const usecase = new PlaceOrderUsecase(checkoutRepositoryDummy, clientFacadeMock, productFacadeDummy,
                 invoiceFacadeDummy, paymentFacadeDummy)
             const input: PlaceOrderInputDTO = { clientID: "1", products: [] }
 
@@ -203,7 +202,7 @@ describe("Place order usecase unit test", () => {
 
         it("should throw an error when product is out of stock", async () => {
             const input: PlaceOrderInputDTO = { clientID: "1", products: [{ id: "1" }] }
-            const usecase = new PlaceOrderUsecase(checkoutRepositoryDummy, clientFacadeMock, productFacadeMock, catalogFacadeDummy,
+            const usecase = new PlaceOrderUsecase(checkoutRepositoryDummy, clientFacadeMock, productFacadeMock,
                 invoiceFacadeDummy, paymentFacadeDummy)
 
             expect(async () => usecase.execute(input)).rejects.toThrow("Product 1 is not available in stock")
@@ -228,21 +227,20 @@ describe("Place order usecase unit test", () => {
             checkStock: jest.fn().mockImplementation((input: CheckStockFacadeInputDto) => Promise.resolve({
                 productId: input.productId,
                 stock: input.productId === "1" ? 0 : 1
-            }))
+            })),
+            find: jest.fn().mockResolvedValue(null),
+            findAll: jest.fn()
         }
 
         it("should throw an error when product not found", async () => {
-            const catalogFacadeMock = {
-                find: jest.fn().mockResolvedValue(null),
-                findAll: jest.fn()
-            }
+            productFacadeMock.find = productFacadeMock.find.mockResolvedValue(null)
 
             const input: PlaceOrderInputDTO = { clientID: "1", products: [{ id: "2" }] }
 
             const usecase = new PlaceOrderUsecase(checkoutRepositoryDummy, clientFacadeMock, productFacadeMock,
-                catalogFacadeMock, invoiceFacadeDummy, paymentFacadeDummy)
+                invoiceFacadeDummy, paymentFacadeDummy)
             await expect(usecase.execute(input)).rejects.toThrow("Product not found")
-            expect(catalogFacadeMock.find).toHaveBeenCalled()
+            expect(productFacadeMock.find).toHaveBeenCalled()
         })
     })
 })

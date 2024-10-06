@@ -6,13 +6,15 @@ const productMock = new Product({
     id: new ID("1"),
     name: "Product 1",
     description: "Desc 1",
-    salesPrice: 100
+    purchasePrice: 100,
+    stock: 1
 })
 
 const repositoryMock = () => {
     return {
-        findAll: jest.fn(),
-        find: jest.fn().mockReturnValue(Promise.resolve(productMock))
+        add: jest.fn(),
+        find: jest.fn().mockReturnValue(Promise.resolve(productMock)),
+        findAll: jest.fn()
     }
 }
 
@@ -30,6 +32,7 @@ describe('find a product usecase unit test', () => {
         expect(output.id).toBe(productMock.ID.Value)
         expect(output.name).toBe(productMock.Name)
         expect(output.description).toBe(productMock.Description)
-        expect(output.salesPrice).toBe(productMock.SalesPrice)
+        expect(output.purchasePrice).toBe(productMock.PurchasePrice)
+        expect(output.stock).toBe(productMock.Stock)
     })
 })

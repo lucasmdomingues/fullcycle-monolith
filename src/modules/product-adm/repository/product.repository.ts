@@ -33,4 +33,15 @@ export default class ProductRepository implements ProductGateway {
             updatedAt: data.updatedAt
         })
     }
+
+    async findAll(): Promise<Product[]> {
+        const products = await ProductModel.findAll()
+        return products.map((product) => new Product({
+            id: new ID(product.id),
+            name: product.name,
+            description: product.description,
+            purchasePrice: product.purchasePrice,
+            stock: product.stock
+        }))
+    }
 }

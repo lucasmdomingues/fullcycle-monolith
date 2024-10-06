@@ -15,7 +15,6 @@ import TransactionModel from "../../modules/payment/repository/transaction.model
 import ProductAdmFacadeFactory from "../../modules/product-adm/factory/facade.factory";
 import ProductModel from "../../modules/product-adm/repository/product.model";
 import ProductRepository from "../../modules/product-adm/repository/product.repository";
-import StoreCatalogFacadeFactory from "../../modules/store-catalog/factory/facade.factory";
 import { NewCheckoutRouter } from "./routes/checkout";
 import { NewClientRouter } from "./routes/client";
 import { NewProductRouter } from "./routes/product";
@@ -27,7 +26,6 @@ export async function NewExpress(): Promise<Express> {
 
     const clientFacade = ClientAdmFacadeFactory.create()
     const productFacade = ProductAdmFacadeFactory.create()
-    const catalogFacade = StoreCatalogFacadeFactory.create() // move methods to ProductAdm module
     const invoiceFacade = InvoiceFacadeFactory.create()
     const paymentFacade = PaymentFacadeFactory.create()
 
@@ -42,7 +40,6 @@ export async function NewExpress(): Promise<Express> {
         checkoutRepository,
         clientFacade,
         productFacade,
-        catalogFacade,
         invoiceFacade,
         paymentFacade
     )

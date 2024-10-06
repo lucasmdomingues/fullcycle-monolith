@@ -11,7 +11,8 @@ export default class FindProductUsecase {
             id: product.ID.Value,
             name: product.Name,
             description: product.Description,
-            salesPrice: product.SalesPrice
+            purchasePrice: product.PurchasePrice,
+            stock: product.Stock
         }
     }
 }
