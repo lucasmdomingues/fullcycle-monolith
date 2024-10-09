@@ -14,7 +14,7 @@ describe('E2E tests for clients', () => {
     })
 
     it('should add a client', async () => {
-        const app = await NewExpress()
+        const app = await NewExpress(sequelize)
 
         const body = {
             name: "Client 1",

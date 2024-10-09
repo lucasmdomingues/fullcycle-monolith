@@ -1,7 +1,7 @@
 import ID from "../../../@shared/domain/value-object/id.value-object";
 import UsecaseInterface from "../../../@shared/usecase/usecase.interface";
 import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.facade.interface";
-import InvoiceFacadeInterface from "../../../invoice/facade/invoice.facade.interface";
+import InvoiceFacadeInterface, { GenerateInvoiceFacadeOutputDto } from "../../../invoice/facade/invoice.facade.interface";
 import PaymentFacadeInterface from "../../../payment/facade/payment.facade.interface";
 import ProductAdmFacadeInterface from "../../../product-adm/facade/product-adm.facade.interface";
 import Client from "../../domain/client.entity";
@@ -51,7 +51,7 @@ export default class PlaceOrderUsecase implements UsecaseInterface {
             amount: order.Total
         })
 
-        let invoice: any;
+        let invoice: GenerateInvoiceFacadeOutputDto;
 
         if (payment.status === "approved") {
             invoice = await this.invoiceFacade.generate({

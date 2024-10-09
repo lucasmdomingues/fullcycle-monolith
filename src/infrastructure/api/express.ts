@@ -19,7 +19,7 @@ import { NewCheckoutRouter } from "./routes/checkout";
 import { NewClientRouter } from "./routes/client";
 import { NewProductRouter } from "./routes/product";
 
-export async function NewExpress(): Promise<Express> {
+export async function NewExpress(sequelize: Sequelize): Promise<Express> {
     const app: Express = express();
 
     app.use(express.json());
@@ -35,7 +35,7 @@ export async function NewExpress(): Promise<Express> {
     const clientRepository = new ClientRepository()
     const clientRouter = NewClientRouter(clientRepository)
 
-    const checkoutRepository = new CheckoutRepository()
+    const checkoutRepository = new CheckoutRepository(sequelize)
     const checkoutRouter = NewCheckoutRouter(
         checkoutRepository,
         clientFacade,

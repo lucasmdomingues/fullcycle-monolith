@@ -29,6 +29,6 @@
   "scripts": {
     "tsc": "tsc",
     "test": "yarn tsc --noEmit && jest",
-    "dev": "nodemon src/infrastructure/api/express/server.ts"
+    "dev": "nodemon src/infrastructure/api/server.ts"
   }
 }

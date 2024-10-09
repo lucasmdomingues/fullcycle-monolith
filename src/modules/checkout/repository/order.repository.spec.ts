@@ -28,7 +28,7 @@ describe('Order repository test', () => {
 
     it("should add a order", async () => {
         const client = new Client({
-            id: new ID("1c"),
+            id: new ID(),
             name: "Client 1",
             email: "x@x.com",
             document: "123",
@@ -40,28 +40,15 @@ describe('Order repository test', () => {
             zipCode: "123",
         })
 
-        await OrderClientModel.create({
-            id: client.ID.Value,
-            name: client.Name,
-            email: client.Email,
-            document: client.Document,
-            street: client.Street,
-            number: client.Number,
-            complement: client.Complement,
-            city: client.City,
-            state: client.State,
-            zipCode: client.ZipCode
-        })
-
         const products = [
             new Product({
-                id: new ID("1p"),
+                id: new ID(),
                 name: "Product 1",
                 description: "Product 1 description",
                 purchasePrice: 100,
             }),
             new Product({
-                id: new ID("2p"),
+                id: new ID(),
                 name: "Product 2",
                 description: "Product 2 description",
                 purchasePrice: 200,
@@ -69,20 +56,20 @@ describe('Order repository test', () => {
         ]
 
         const order = new Order({
-            id: new ID("1o"),
+            id: new ID(),
             client: client,
             produts: products,
             status: "approved"
         })
 
-        const repository = new CheckoutRepository()
+        const repository = new CheckoutRepository(sequelize)
         await repository.addOrder(order)
 
         const orderModel = await OrderModel.findOne({
             where: { id: order.ID.Value },
             include: [
-                { model: OrderClientModel },
-                { model: OrderProductModel }
+                { model: OrderProductModel },
+                { model: OrderClientModel }
             ]
         })
 
@@ -110,7 +97,7 @@ describe('Order repository test', () => {
 
     it("should find a order", async () => {
         const client = new Client({
-            id: new ID("1c"),
+            id: new ID(),
             name: "Client 1",
             email: "x@x.com",
             document: "123",
@@ -122,28 +109,15 @@ describe('Order repository test', () => {
             zipCode: "123",
         })
 
-        await OrderClientModel.create({
-            id: client.ID.Value,
-            name: client.Name,
-            email: client.Email,
-            document: client.Document,
-            street: client.Street,
-            number: client.Number,
-            complement: client.Complement,
-            city: client.City,
-            state: client.State,
-            zipCode: client.ZipCode
-        })
-
         const products = [
             new Product({
-                id: new ID("1p"),
+                id: new ID(),
                 name: "Product 1",
                 description: "Product 1 description",
                 purchasePrice: 100,
             }),
             new Product({
-                id: new ID("2p"),
+                id: new ID(),
                 name: "Product 2",
                 description: "Product 2 description",
                 purchasePrice: 200,
@@ -151,13 +125,13 @@ describe('Order repository test', () => {
         ]
 
         const order = new Order({
-            id: new ID("1o"),
+            id: new ID(),
             client: client,
             produts: products,
             status: "approved"
         })
 
-        const repository = new CheckoutRepository()
+        const repository = new CheckoutRepository(sequelize)
         await repository.addOrder(order)
 
         const output = await repository.findOrder(order.ID.Value)
