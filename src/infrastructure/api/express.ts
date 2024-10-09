@@ -18,6 +18,8 @@ import ProductRepository from "../../modules/product-adm/repository/product.repo
 import { NewCheckoutRouter } from "./routes/checkout";
 import { NewClientRouter } from "./routes/client";
 import { NewProductRouter } from "./routes/product";
+import InvoiceRepository from "../../modules/invoice/repository/invoice.repository";
+import { NewInvoiceRouter } from "./routes/invoice";
 
 export async function NewExpress(sequelize: Sequelize): Promise<Express> {
     const app: Express = express();
@@ -44,9 +46,13 @@ export async function NewExpress(sequelize: Sequelize): Promise<Express> {
         paymentFacade
     )
 
+    const invoiceRepository = new InvoiceRepository()
+    const invoiceRouter = NewInvoiceRouter(invoiceRepository)
+
     app.use('/products', productRouter)
     app.use('/clients', clientRouter)
     app.use('/checkout', checkoutRouter)
+    app.use('/invoice', invoiceRouter)
 
     return app
 }

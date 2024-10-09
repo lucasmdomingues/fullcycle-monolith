@@ -53,7 +53,14 @@ export default class CheckoutRepository implements CheckoutGateway {
         }
     }
     async findOrder(id: string): Promise<Order | null> {
-        const orderModel = await OrderModel.findOne({ where: { id }, include: [{ model: ClientModel }, { model: ProductModel }] })
+        const orderModel = await OrderModel.findOne({
+            where: { id },
+            include: [
+                { model: ClientModel },
+                { model: ProductModel },
+            ],
+        })
+        
         if (!orderModel) return null
 
         return new Order({

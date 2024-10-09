@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize-typescript"
 import request from "supertest"
 import { NewExpress, NewSequelize } from "../express"
 
-describe('E2E tests for checkout', () => {
+describe('E2E tests for invoice', () => {
     let sequelize: Sequelize
 
     beforeEach(async () => {
@@ -13,7 +13,7 @@ describe('E2E tests for checkout', () => {
         await sequelize.close()
     })
 
-    it('should place an order', async () => {
+    it('should find a invoice', async () => {
         const app = await NewExpress(sequelize)
 
         // Add client
@@ -69,10 +69,24 @@ describe('E2E tests for checkout', () => {
         response = await request(app).post('/checkout').send(body)
         expect(response.statusCode).toBe(200)
 
-        expect(response.body.id).toBeDefined()
         expect(response.body.invoiceID).toBeDefined()
-        expect(response.body.status).toBe("approved")
+        
+        const invoiceID = response.body.invoiceID
+
+        // Find invoice
+        response = await request(app).get(`/invoice/${invoiceID}`)
+        expect(response.statusCode).toBe(200)
+        
+        expect(response.body.id).toBe(invoiceID)
+        expect(response.body.name).toBe(createUserInput.name)
+        expect(response.body.document).toBe(createUserInput.document)
+        expect(response.body.address.street).toBe(createUserInput.street)
+        expect(response.body.address.number).toBe(createUserInput.number)
+        expect(response.body.address.complement).toBe(createUserInput.complement)
+        expect(response.body.address.city).toBe(createUserInput.city)
+        expect(response.body.address.state).toBe(createUserInput.state)
+        expect(response.body.address.zipCode).toBe(createUserInput.zipCode)
+        expect(response.body.items).toHaveLength(createProductInputs.length)
         expect(response.body.total).toBe(200)
-        expect(response.body.products).toHaveLength(createProductInputs.length)
     })
 })
