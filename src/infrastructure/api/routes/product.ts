@@ -4,10 +4,9 @@ import AddProductUsecase from "../../../modules/product-adm/usecase/add-product/
 
 export function NewProductRouter(repository: ProductGateway): Router {
     const router = express.Router()
+    const usecase = new AddProductUsecase(repository)
 
     router.post("/", async (req: Request, res: Response) => {
-        const usecase = new AddProductUsecase(repository)
-
         try {
             const output = await usecase.execute({
                 name: req.body.name,

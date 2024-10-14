@@ -20,11 +20,13 @@ import { NewClientRouter } from "./routes/client";
 import { NewProductRouter } from "./routes/product";
 import InvoiceRepository from "../../modules/invoice/repository/invoice.repository";
 import { NewInvoiceRouter } from "./routes/invoice";
+import morgan from "morgan"
 
 export async function NewExpress(sequelize: Sequelize): Promise<Express> {
     const app: Express = express();
 
     app.use(express.json());
+    app.use(morgan("common", { skip: (req, res) => process.env.NODE_ENV === 'test' }))
 
     const clientFacade = ClientAdmFacadeFactory.create()
     const productFacade = ProductAdmFacadeFactory.create()

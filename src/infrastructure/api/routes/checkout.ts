@@ -14,16 +14,15 @@ export function NewCheckoutRouter(
     paymentFacade: PaymentFacadeInterface
 ): Router {
     const router = express.Router()
+    const usecase = new PlaceOrderUsecase(
+        repository,
+        clientFacade,
+        productFacade,
+        invoiceFacade,
+        paymentFacade
+    )
 
     router.post("/", async (req: Request, res: Response) => {
-        const usecase = new PlaceOrderUsecase(
-            repository,
-            clientFacade,
-            productFacade,
-            invoiceFacade,
-            paymentFacade
-        )
-
         try {
             const output = await usecase.execute({
                 clientID: req.body.clientID,

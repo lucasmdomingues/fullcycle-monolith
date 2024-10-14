@@ -4,10 +4,9 @@ import AddClientUsecase from "../../../modules/client-adm/usecase/add-client/add
 
 export function NewClientRouter(repository: ClientGateway): Router {
     const router = express.Router()
+    const usecase = new AddClientUsecase(repository)
 
     router.post("/", async (req: Request, res: Response) => {
-        const usecase = new AddClientUsecase(repository)
-
         try {
             const output = await usecase.execute({
                 name: req.body.name,
